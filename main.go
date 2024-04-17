@@ -125,6 +125,9 @@ func main() {
 		return
 	}
 
+	fs := http.FS(staticFS)
+	fileServer := http.FileServer(fs)
+
 	r := http.NewServeMux()
 
 	r.HandleFunc("GET /{file}", func(w http.ResponseWriter, r *http.Request) {
@@ -133,7 +136,12 @@ func main() {
 		case "docs":
 			http.ServeFile(w, r, "static/index.html")
 		default:
-			http.ServeFile(w, r, fmt.Sprintf("static/%s", file))
+			_, err := fs.Open(file)
+			if err != nil {
+				http.NotFound(w, r)
+				return
+			}
+			fileServer.ServeHTTP(w, r)
 		}
 		return
 	})
