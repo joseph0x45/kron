@@ -11,6 +11,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/a-h/templ"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -129,6 +130,8 @@ func main() {
 	fileServer := http.FileServer(fs)
 
 	r := http.NewServeMux()
+
+	r.Handle("GET /", templ.Handler(HomePage()))
 
 	r.HandleFunc("GET /{file}", func(w http.ResponseWriter, r *http.Request) {
 		file := r.PathValue("file")
