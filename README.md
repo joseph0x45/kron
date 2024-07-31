@@ -1,2 +1,1 @@
-# swaggerhub
-Manage all your swagger documentation in one place
+# Kron, test automation platform
