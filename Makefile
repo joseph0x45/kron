@@ -1,9 +1,11 @@
 CFLAGS = -Wall -Wextra -Werror -g -pedantic -Wshadow
-ALL_CFLAGS = -Wall -Wextra -Werror -pedantic -g -O0 -std=c11 -Wshadow -Wformat -Wuninitialized -Wconversion -Wnull-dereference -fstack-protector -fsanitize=address
+INCLUDES = -I./include/
 LIBS = -lraylib
+SRC = ./src/main.c ./src/game.c ./src/player.c
+OUT = ./bin/kron.o
 
 all:
-	gcc $(CFLAGS) -o ./bin/kron.o ./src/main.c $(LIBS)
+	gcc $(CFLAGS) $(INCLUDES) -o $(OUT) $(SRC) $(LIBS)
 
 run:
-	./bin/kron
+	./bin/kron.o
