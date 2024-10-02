@@ -4,8 +4,9 @@
 - [x] Implement dashing ability
 - [x] Display player coordinates in real time
 - [x] Prevent player from going off map bounds
+# 2024-10-02
 - [x] Implement stamina
-- [ ] Refill up stamina after 5 secondes
-- [ ] Find out how to move player in hexagonal directions
-- [ ] Display health on screen
-- [ ] Display stamina on screen
+- [x] Refill up stamina after 3 secondes
+- [x] Find out how to move player in hexagonal directions
+- [x] Display health on screen
+- [x] Display stamina on screen

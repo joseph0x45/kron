@@ -9,7 +9,7 @@ int main(void) {
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
-    ClearBackground(GRAY);
+    ClearBackground(WHITE);
     BeginDrawing();
     play(game);
     EndDrawing();

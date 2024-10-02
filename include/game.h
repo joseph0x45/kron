@@ -31,3 +31,5 @@ void play(Game *game);
 void clean_up_game(Game *game);
 
 void handle_input(Game *game);
+
+void process_game_logic(Game *game);

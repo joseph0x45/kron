@@ -36,8 +36,15 @@ Game *init_game(int screen_width, int screen_height) {
   return game;
 }
 
+int player_is_moving() {
+  return IsKeyDown(KEY_W) || IsKeyDown(KEY_A) || IsKeyDown(KEY_S) ||
+         IsKeyDown(KEY_D);
+}
+
 void handle_input(Game *game) {
-  if (IsKeyDown(KEY_SPACE)) {
+  if (IsKeyDown(KEY_SPACE) && player_is_moving()) {
+    game->player->last_used_stamina = GetTime();
+    game->player->stamina_cooldown_active = 1;
     if (game->player->stamina > 0) {
       game->player_velocity = DASHING_VEOCITY;
       if (game->player->stamina - 1 < 0) {
@@ -45,15 +52,10 @@ void handle_input(Game *game) {
       } else {
         game->player->stamina -= 1;
       }
-    } else {
-      // set stamina cooling down to 3*1000
     }
   }
   if (IsKeyUp(KEY_SPACE)) {
     game->player_velocity = BASIC_VELOCITY;
-    if (game->player->stamina + 1 <= PLAYER_MAX_STAMINA) {
-      game->player->stamina++;
-    }
   }
   int x = game->player->pos_x;
   int y = game->player->pos_y;
@@ -83,9 +85,13 @@ void handle_input(Game *game) {
   game->player->pos_y = y;
 }
 
+/* void process_game_logic(Game *game) { */
+/*  */
+/* } */
+
 void render_game(Game *game) {
-  draw_player_stats(game->player);
-  draw_player(game->player);
+  /* process_game_logic(game); */
+  handle_player(game->player);
 }
 
 void play(Game *game) {
