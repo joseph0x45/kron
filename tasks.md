@@ -2,9 +2,10 @@
 - [x] Show player on screen
 - [x] Move player around with WASD
 - [x] Implement dashing ability
-- [ ] Display player coordinates in real time
-- [ ] Implement stamina
+- [x] Display player coordinates in real time
+- [x] Prevent player from going off map bounds
+- [x] Implement stamina
+- [ ] Refill up stamina after 5 secondes
 - [ ] Find out how to move player in hexagonal directions
 - [ ] Display health on screen
 - [ ] Display stamina on screen
-- [ ] Prevent player from going off map bounds

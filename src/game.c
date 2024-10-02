@@ -5,11 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define BASIC_VELOCITY 5;
-#define DASHING_VEOCITY 10;
-
-#define player_img_path "/home/joseph/personal/kron/assets/player.png"
-
 /*
  * Creates a game
  *
@@ -23,7 +18,7 @@ Game *init_game(int screen_width, int screen_height) {
     perror("Failed to allocate memory for game");
     return NULL;
   }
-  Player *player = init_player();
+  Player *player = init_player(&game->player_texture);
   if (player == NULL) {
     free(game);
     return NULL;
@@ -42,6 +37,24 @@ Game *init_game(int screen_width, int screen_height) {
 }
 
 void handle_input(Game *game) {
+  if (IsKeyDown(KEY_SPACE)) {
+    if (game->player->stamina > 0) {
+      game->player_velocity = DASHING_VEOCITY;
+      if (game->player->stamina - 1 < 0) {
+        game->player->stamina = 0;
+      } else {
+        game->player->stamina -= 1;
+      }
+    } else {
+      // set stamina cooling down to 3*1000
+    }
+  }
+  if (IsKeyUp(KEY_SPACE)) {
+    game->player_velocity = BASIC_VELOCITY;
+    if (game->player->stamina + 1 <= PLAYER_MAX_STAMINA) {
+      game->player->stamina++;
+    }
+  }
   int x = game->player->pos_x;
   int y = game->player->pos_y;
   if (IsKeyDown(KEY_W)) {
@@ -56,12 +69,6 @@ void handle_input(Game *game) {
   if (IsKeyDown(KEY_D)) {
     x += game->player_velocity;
   };
-  if (IsKeyDown(KEY_SPACE)) {
-    game->player_velocity = DASHING_VEOCITY;
-  }
-  if (IsKeyUp(KEY_SPACE)) {
-    game->player_velocity = BASIC_VELOCITY;
-  }
   if (x < 0) {
     x = 0;
   } else if (x >= game->screen_width - game->player_texture.width) {
@@ -77,10 +84,8 @@ void handle_input(Game *game) {
 }
 
 void render_game(Game *game) {
-  // render player
-  draw_coordinates(game->player);
-  DrawTexture(game->player_texture, game->player->pos_x, game->player->pos_y,
-              GRAY);
+  draw_player_stats(game->player);
+  draw_player(game->player);
 }
 
 void play(Game *game) {
@@ -93,7 +98,7 @@ void clean_up_game(Game *game) {
   if (game == NULL) {
     return;
   }
-  free(game->player);
   UnloadTexture(game->player_texture);
+  free(game->player);
   free(game);
 }

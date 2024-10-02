@@ -2,6 +2,10 @@
 #include "player.h"
 #include <raylib.h>
 
+#define BASIC_VELOCITY 3
+#define DASHING_VEOCITY 8
+#define player_img_path "/home/joseph/personal/kron/assets/player.png"
+
 typedef enum {
   RUNNING,
   PAUSED,
